@@ -1,12 +1,19 @@
-name: Trigger Fork Repo Actions
+name: Trigger Fork Repo Action
 
-on: 
+on:
   push:
     branches:
       - main
+
 jobs:
   trigger-fork:
-    if: github.repository_owner == 'subject-test-2'
     runs-on: ubuntu-latest
+    if: github.repository_owner == 'subject-test-2'
     steps:
-      - run: echo 'main branch pushed'
+      - name: Trigger repository_dispatch
+        run: |
+          curl -X POST \
+          -H "Authorization: token ${{ secrets.PAT }}" \
+          -H "Accept: application/vnd.github.everest-preview+json" \
+          "https://api.github.com/repos/han9898/ci-cd-copied/dispatches" \
+          -d '{"event_type": "main_updated"}'
