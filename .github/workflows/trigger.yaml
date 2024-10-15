@@ -7,5 +7,6 @@ on:
 jobs:
   trigger-sync:
     runs-on: ubuntu-latest
+    if: github.repository == 'han9898/ci-cd-copied'
     steps:
       - run: echo 'sync'
